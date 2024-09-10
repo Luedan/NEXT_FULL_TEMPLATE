@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { PrismaService } from "./prisma_adapter";
+import { PrismaService } from "./prisma.adapter";
 import { DefaultArgs } from "@prisma/client/runtime/library";
 
 export class AppContext {
