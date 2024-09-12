@@ -4,6 +4,8 @@ import { HttpAdapter } from "./http.adapter";
  * Represents an HTTP adapter using the Fetch API.
  */
 export class FetchAdapter implements HttpAdapter {
+  constructor(private readonly _typeResponse: string = "json") {}
+
   async get<T>(url: string, options?: RequestInit): Promise<T> {
     const data = await fetch(url, options);
 
@@ -11,7 +13,7 @@ export class FetchAdapter implements HttpAdapter {
       throw new Error("Error Getting Data with status: " + data.status);
     }
 
-    const response: T = await data.json();
+    const response: T = await this.resolveData(data);
 
     return response;
   }
@@ -30,7 +32,7 @@ export class FetchAdapter implements HttpAdapter {
       throw new Error("Error Posting Data with status: " + data.status);
     }
 
-    const response: T = await data.json();
+    const response: T = await this.resolveData(data);
 
     return response;
   }
@@ -49,7 +51,7 @@ export class FetchAdapter implements HttpAdapter {
       throw new Error("Error Putting Data with status: " + data.status);
     }
 
-    const response: T = await data.json();
+    const response: T = await this.resolveData(data);
 
     return response;
   }
@@ -64,8 +66,16 @@ export class FetchAdapter implements HttpAdapter {
       throw new Error("Error Deleting Data with status: " + data.status);
     }
 
-    const response: T = await data.json();
+    const response: T = await this.resolveData(data);
 
     return response;
+  }
+
+  async resolveData<T>(data: any): Promise<T | any>{
+    if (this._typeResponse === "json") {
+      return await data.json() as T; 
+    } else {
+      return await data.text() as unknown as T;
+    }
   }
 }

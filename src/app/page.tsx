@@ -1,17 +1,14 @@
-"use client";
+import { fetcher } from "@/config/fetcher";
 import { Button } from "primereact/button";
-import { InputText } from "primereact/inputtext";
-import { FloatLabel } from "primereact/floatlabel";
 
-export default function Home() {
+export default async function Home() {
+  const data = await fetcher.get("https://pokeapi.co/api/v2/pokemon/ditto");
+
+  console.log(data);
   return (
-    <div className="h-screen w-screen p-3 bg-red-50 flex justify-center items-center">
-      <Button label="Click" />
-
-      <FloatLabel>
-        <InputText id="username" className="p-inputtext-sm"/>
-        <label htmlFor="username">Username</label>
-      </FloatLabel>
+    <div className="h-screen w-screen p-3 bg-slate-50 flex justify-center items-center flex-col">
+      <Button label="Ir a ejemplo TODO" className="mb-3" />
+      <Button label="Ir a ejemplo consumo API" />
     </div>
   );
 }
