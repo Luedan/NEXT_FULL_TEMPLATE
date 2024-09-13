@@ -71,11 +71,11 @@ export class FetchAdapter implements HttpAdapter {
     return response;
   }
 
-  async resolveData<T>(data: any): Promise<T | any>{
+  async resolveData<T>(data: any): Promise<T | any> {
     if (this._typeResponse === "json") {
-      return await data.json() as T; 
+      return (await data.json()) as T;
     } else {
-      return await data.text() as unknown as T;
+      return (await data.text()) as unknown as T;
     }
   }
 }

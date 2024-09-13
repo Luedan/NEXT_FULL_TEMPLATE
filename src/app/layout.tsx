@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { PrimeReactProvider } from "primereact/api";
 import "./globals.css";
 import "primereact/resources/themes/lara-light-blue/theme.css";
+import 'primeicons/primeicons.css';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
