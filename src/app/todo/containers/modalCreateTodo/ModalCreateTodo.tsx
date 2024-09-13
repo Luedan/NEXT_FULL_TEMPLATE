@@ -8,7 +8,8 @@ import { useForm } from "react-hook-form";
 import { todoFormSchema, todoSchema } from "./schema";
 import { createTodoAction } from "@/core/application/actions/todo";
 import { useFormState } from "react-dom";
-import { useRef } from "react";
+import { FormEvent, useRef } from "react";
+import { toast } from "react-toastify";
 
 export const ModalCreateTodo = () => {
   const { isOpen, openModal, closeModal } = useModal();
@@ -23,9 +24,17 @@ export const ModalCreateTodo = () => {
 
   const formRef = useRef<HTMLFormElement>(null);
 
-  const onSubmit = (data: todoFormSchema) => {
-    return formRef?.current?.submit();
+  const onSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    form.handleSubmit(() => {
+      action(new FormData(formRef.current!));
+    })(evt);
   };
+
+  // if (state.success) {
+  //   toast.success(state.message);
+  //   closeModal();
+  // }
 
   return (
     <div className="card flex justify-content-center">
@@ -41,7 +50,7 @@ export const ModalCreateTodo = () => {
         <form
           ref={formRef}
           action={action}
-          onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={onSubmit}
         >
           <InputText
             type="text"

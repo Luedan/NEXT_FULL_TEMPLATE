@@ -4,6 +4,8 @@ import { PrimeReactProvider } from "primereact/api";
 import "./globals.css";
 import "primereact/resources/themes/lara-light-blue/theme.css";
 import 'primeicons/primeicons.css';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -31,6 +33,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <ToastContainer />
         <PrimeReactProvider>{children}</PrimeReactProvider>
       </body>
     </html>
