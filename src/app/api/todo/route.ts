@@ -1,5 +1,8 @@
-import { CreateTodo } from "@/domain/entities/todo/todo.entity";
-import { CreateTodoService, GetAllTodos } from "@/services/todo/todo.service";
+import {
+  CreateTodoService,
+  GetAllTodos,
+} from "@/core/application/services/todo/todo.service";
+import { CreateTodo } from "@/core/domain/entities/todo/todo.entity";
 
 export async function POST(request: Request) {
   const todo: CreateTodo = await request.json();
@@ -9,9 +12,8 @@ export async function POST(request: Request) {
   return Response.json(data);
 }
 
-
 export async function GET() {
-    const data = await GetAllTodos();
+  const data = await GetAllTodos();
 
-    return Response.json(data);
+  return Response.json(data);
 }

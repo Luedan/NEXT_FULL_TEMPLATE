@@ -1,4 +1,4 @@
-import { fetcher } from "@/config/fetcher";
+import { fetcher } from "@/core/config/fetcher";
 import { Button } from "primereact/button";
 
 export default async function Home() {

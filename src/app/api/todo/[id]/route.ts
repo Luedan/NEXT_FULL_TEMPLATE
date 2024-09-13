@@ -1,5 +1,9 @@
-import { UpdateTodo } from "@/domain/entities/todo/todo.entity";
-import { DeleteTodoService, GetTodoById, UpdateTodoService } from "@/services/todo/todo.service";
+import {
+  GetTodoById,
+  UpdateTodoService,
+  DeleteTodoService,
+} from "@/core/application/services/todo/todo.service";
+import { UpdateTodo } from "@/core/domain/entities/todo/todo.entity";
 import { NextRequest } from "next/server";
 
 interface Params {

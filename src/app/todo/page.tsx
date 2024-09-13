@@ -1,12 +1,12 @@
-export default function Page() {
-  return (
-    <div className="flex flex-col  flex-1 justify-center items-center">
-      <h1>Todo</h1>
-      <ul>
-        <li>Buy milk</li>
-        <li>Walk the dog</li>
-        <li>Read a book</li>
-      </ul>
-    </div>
-  );
+import { fetcher } from "@/core/config/fetcher";
+import { URL_API } from "@/core/utils/constants/url";
+import { Todo } from "@/core/domain/entities/todo/todo.entity";
+import { TodoListContainer } from "./containers/TodoListContainer";
+
+export default async function Page() {
+  const data = await fetcher.get<Todo[]>(`${URL_API}/todo`, {
+    cache: "no-cache",
+  });
+
+  return <TodoListContainer todos={data} />;
 }

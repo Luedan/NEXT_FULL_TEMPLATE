@@ -1,13 +1,15 @@
-import { appContext } from "@/config/database/app_context";
+import { appContext } from "@/core/config/database/app_context";
 import {
   CreateTodo,
   Todo,
   UpdateTodo,
-} from "@/domain/entities/todo/todo.entity";
+} from "@/core/domain/entities/todo/todo.entity";
 
 export async function CreateTodoService(todo: CreateTodo): Promise<Todo> {
   try {
-    const data = await appContext.todo.create({ data: todo });
+    const data = await appContext.todo.create({
+      data: { ...todo },
+    });
 
     return data;
   } catch (error: any) {
