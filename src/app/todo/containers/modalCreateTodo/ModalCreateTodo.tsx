@@ -6,35 +6,29 @@ import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { useForm } from "react-hook-form";
 import { todoFormSchema, todoSchema } from "./schema";
-import { createTodoAction } from "@/core/application/actions/todo";
-import { useFormState } from "react-dom";
-import { FormEvent, useRef } from "react";
+import { useLazyApi } from "@/common/hooks/useApi";
+import { createTodoAction } from "@/core/application/actions/todo/todo.actions";
 import { toast } from "react-toastify";
 
 export const ModalCreateTodo = () => {
   const { isOpen, openModal, closeModal } = useModal();
+
+  const [createTodo, { loading }] = useLazyApi(createTodoAction);
+
   const form = useForm<todoFormSchema>({
     resolver: zodResolver(todoSchema),
     mode: "onChange",
   });
-  const [state, action, isPending] = useFormState(createTodoAction, {
-    message: "",
-    success: false,
-  });
 
-  const formRef = useRef<HTMLFormElement>(null);
-
-  const onSubmit = (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
-    form.handleSubmit(() => {
-      action(new FormData(formRef.current!));
-    })(evt);
+  const onSubmit = (data: todoFormSchema) => {
+    createTodo(data, {
+      onSuccess() {
+        form.reset({ title: "" });
+        closeModal();
+        toast.success("Todo creado");
+      },
+    });
   };
-
-  // if (state.success) {
-  //   toast.success(state.message);
-  //   closeModal();
-  // }
 
   return (
     <div className="card flex justify-content-center">
@@ -47,11 +41,7 @@ export const ModalCreateTodo = () => {
         breakpoints={{ "960px": "55vw", "641px": "95vw" }}
         dismissableMask
       >
-        <form
-          ref={formRef}
-          action={action}
-          onSubmit={onSubmit}
-        >
+        <form onSubmit={form.handleSubmit(onSubmit)}>
           <InputText
             type="text"
             className="p-inputtext-sm w-full"
@@ -65,7 +55,8 @@ export const ModalCreateTodo = () => {
             size="small"
             className="mt-4 w-full"
             type="submit"
-            disabled={isPending}
+            loading={loading}
+            disabled={loading}
           />
         </form>
       </Dialog>

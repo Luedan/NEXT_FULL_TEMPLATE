@@ -1,10 +1,14 @@
+"use client";
 import React from "react";
 import { Todo } from "@/core/domain/entities/todo/todo.entity";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Card } from "primereact/card";
 import { ModalCreateTodo } from "./modalCreateTodo/ModalCreateTodo";
-import TodoListActionButton from "../components/TodoListActionButton";
+import {
+  TodoCompletedButton,
+  TodoListActionButton,
+} from "../components/TodoListActionButton";
 
 interface TodoListContainerProps {
   todos: Todo[];
@@ -36,7 +40,14 @@ export const TodoListContainer = ({ todos }: TodoListContainerProps) => {
               filter
             />
           ))}
-          <Column header="Acciones" body={<TodoListActionButton />} />
+          <Column
+            header="Completado"
+            body={(data) => <TodoCompletedButton row={data} />}
+          />
+          <Column
+            header="Acciones"
+            body={(data) => <TodoListActionButton id={data?.id} />}
+          />
         </DataTable>
       </Card>
     </div>

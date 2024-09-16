@@ -22,7 +22,7 @@ export async function CreateTodoService(todo: CreateTodo): Promise<Todo> {
 
 export async function GetAllTodos(): Promise<Todo[]> {
   try {
-    const data = await appContext.todo.findMany();
+    const data = await appContext.todo.findMany({ orderBy: { id: "asc" } });
 
     return data;
   } catch (error: any) {
