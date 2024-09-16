@@ -38,6 +38,8 @@ export async function completeTodoAction({
   id: string;
   completed: boolean;
 }): Promise<Todo> {
+  const pokes = await fetcher.get("https://pokeapi.co/api/v2/pokemon/ditto");
+  console.log(pokes);
   const data = await fetcher.put<Todo, UpdateTodo>(`${URL_API}/todo/${id}`, {
     completed,
   });
