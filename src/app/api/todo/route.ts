@@ -13,7 +13,7 @@ export async function POST(request: Request) {
 }
 
 export async function GET() {
-  const data = await GetAllTodos();
+  const data = await GetAllTodos({ page: 1, limit: 100,  });
 
   return Response.json(data);
 }

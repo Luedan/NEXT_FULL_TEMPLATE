@@ -20,9 +20,19 @@ export async function CreateTodoService(todo: CreateTodo): Promise<Todo> {
   }
 }
 
-export async function GetAllTodos(): Promise<Todo[]> {
+export async function GetAllTodos({
+  page,
+  limit,
+}: {
+  page: number;
+  limit: number;
+}): Promise<Todo[]> {
   try {
-    const data = await appContext.todo.findMany({ orderBy: { id: "asc" } });
+    const data = await appContext.todo.findMany({
+      orderBy: { id: "asc" },
+      skip: (page - 1) * limit,
+      take: limit,
+    });
 
     return data;
   } catch (error: any) {

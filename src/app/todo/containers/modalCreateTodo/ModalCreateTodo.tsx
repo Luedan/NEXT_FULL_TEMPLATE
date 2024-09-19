@@ -5,10 +5,10 @@ import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { useForm } from "react-hook-form";
-import { todoFormSchema, todoSchema } from "./schema";
 import { useLazyApi } from "@/common/hooks/useApi";
 import { createTodoAction } from "@/core/application/actions/todo/todo.actions";
 import { toast } from "react-toastify";
+import { todoFormSchema, todoSchema } from "@/core/domain/entities/todo/todo.schema";
 
 export const ModalCreateTodo = () => {
   const { isOpen, openModal, closeModal } = useModal();
